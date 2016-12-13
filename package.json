@@ -10,5 +10,8 @@
     "diff"
   ],
   "author": "Arthur Buldauskas",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^1.4.12"
+  }
 }
