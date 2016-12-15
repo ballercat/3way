@@ -1,14 +1,23 @@
 /* eslint-env node, es6 */
 'use strict'
 
-var remote = require('electron').remote;
+const remote = require('electron').remote;
+const fs = require('fs');
+const jsdiff = require('diff');
 
-var baseEl = document.getElementById('base-diff');
-var localEl = document.getElementById('local-diff');
-var remoteEl = document.getElementById('remote-diff');
+function App(options) {
+  this.baseEl = document.getElementById('base-diff');
+  this.localEl = document.getElementById('local-diff');
+  this.remoteEl = document.getElementById('remote-diff');
 
-var diffs = remote.getGlobal('diffs');
+  if (options.diffArgv) {
+    this.base = options.diffArgv[0];
+    this.local = options.diffArgv[1];
+    this.remote = options.diffArgv[2];
+  }
+}
 
-baseEl.innerHTML = diffs.base;
-localEl.innerHTML = diffs.local;
-remoteEl.innerHTML = diffs.remote;
+var app = new App({
+  diffArgv: remote.getGlobal('diffArgv')
+});
+

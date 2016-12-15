@@ -2,15 +2,11 @@
 'use strict';
 
 const electron = require('electron');
-const fs = require('fs');
-const jsdiff = require('diff');
 const app = electron.app;
 
-const BASE = fs.readFileSync(process.argv[2], 'utf8');
-const LOCAL = fs.readFileSync(process.argv[3], 'utf8');
-const REMOTE = fs.readFileSync(process.argv[4], 'utf8');
-
-global.diff = jsdiff.diffLines(LOCAL, REMOTE);
+if (process.argv.length > 2) {
+  global.diffArgv = process.argv.slice(2, 4);
+}
 
 let mainWindow;
 
