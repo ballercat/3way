@@ -5,7 +5,9 @@
   "description": "3-way merge",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "node-sass --include-path scss scss/main.scssh main.css",
+    "watch-sass": "nodemon -e scss -x \"npm run sass\""
   },
   "keywords": [
     "diff"
@@ -13,6 +15,8 @@
   "author": "Arthur Buldauskas",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^1.4.12"
+    "electron": "^1.4.12",
+    "node-sass": "^4.0.0",
+    "nodemon": "^1.11.0"
   }
 }
