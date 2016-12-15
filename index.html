@@ -2,15 +2,15 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Electron boilerplate</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <div class="container">
-      <header>
-        <h1>Electron boilerplate</h1>
-      </header>
-      <section class="main"></section>
+      <section class="main">
+        <div class="diff"><pre id="local-diff"></pre></div>
+        <div class="diff"><pre id="base-diff"></pre></div>
+        <div class="diff"><pre id="remote-diff"></pre></div>
+      </section>
       <footer>
         <script>require('./main.js')</script>
       </footer>

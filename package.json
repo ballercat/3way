@@ -1,5 +1,6 @@
 {
   "name": "3way",
+  "productName": "3way",
   "version": "1.0.0",
   "description": "3-way merge",
   "main": "index.js",
