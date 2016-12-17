@@ -27,6 +27,19 @@ describe('diff object', () => {
   });
 
   describe('diff operation', () => {
+    const baseDiff =
+      `cat
+       dog`;
+    const testDiff =
+      `mouse
+       cat`;
+    let base, test;
+    beforeEach(() => {
+      base = diff.create(baseDiff);
+      test = diff.create(testDIff);
+    });
+
     it('is a function', () => expect(utils.isFunction(diff.diff)).toBe(true));
+    it('creates a new diff object', () => expect(diff.diff(base, test).isDiff).toBe(true));
   });
 });
