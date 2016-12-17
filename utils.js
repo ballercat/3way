@@ -11,13 +11,18 @@ const isFunction = R.is(Function);
 // Utility functions
 const split = R.curry((token, value) => isString(value) ? String.prototype.split.call(value, token) : value);
 const join = R.curry((token, value) => isArray(value) ? Array.prototype.join.call(value, token) : value);
+const forEach = R.curry((op, value) => isArray(value) ? Array.prototype.forEach.call(value, op) : value);
 
-module.exports = {
+// Utility Object
+const utils =  {
   isString: isString,
   isObject: isObject,
   isNumber: isNumber,
   isFunction: isFunction,
   split: split,
-  join: join
+  join: join,
+  forEach: forEach
 };
+
+module.exports = utils;
 

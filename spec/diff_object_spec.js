@@ -1,7 +1,9 @@
 /* eslint-env node, jasmine, es6 */
+'use strict';
 
 const diff = require('../diff_object');
 const utils = require('../utils');
+const specUtils = require('./spec_utils');
 
 describe('diff object', () => {
 
@@ -24,22 +26,19 @@ describe('diff object', () => {
     it('must have isDiff defined', () => expect(obj.isDiff).toBeDefined());
     it('must have raw defined', () => expect(obj.raw).toBeDefined());
     it('must have lines defined', () => expect(obj.lines).toBeDefined());
+    it('must have parts defined', () => expect(obj.parts).toBeDefined());
   });
 
   describe('diff operation', () => {
-    const baseDiff =
-      `cat
-       dog`;
-    const testDiff =
-      `mouse
-       cat`;
     let base, test;
     beforeEach(() => {
-      base = diff.create(baseDiff);
-      test = diff.create(testDIff);
+      base = diff.create(specUtils.loremIpsum.p[0]);
+      test = diff.create(specUtils.loremIpsum.p[1]);
     });
 
     it('is a function', () => expect(utils.isFunction(diff.diff)).toBe(true));
     it('creates a new diff object', () => expect(diff.diff(base, test).isDiff).toBe(true));
+    it('creates a diff object with parts', () => expect(diff.diff(base, test).parts).toBeDefined());
+    it('creates parts with length', () => expect(diff.diff(base, test).parts.length).toBe(2));
   });
 });
