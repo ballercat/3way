@@ -2,10 +2,34 @@
  * main
  */
 
+$diff-red: #f9c1c1;
+$diff-green: #b5f1b5;
+
 .main {
   display: flex;
 
   // Element containing the diff content
   .diffBox {
+    width: 30%;
+
+    &-header {
+      width: 100%;
+      font-weight: bold;
+      text-align: center;
+    }
+    .line {
+      color: grey;
+      margin: 0;
+      &-removed,
+      &-added {
+        cursor: pointer;
+      }
+      &-removed {
+        background-color: $diff-red;
+      }
+      &-added {
+        background-color: $diff-green;
+      }
+    }
   }
 }

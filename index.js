@@ -5,7 +5,7 @@ const electron = require('electron');
 const app = electron.app;
 
 if (process.argv.length > 2) {
-  global.diffArgv = process.argv.slice(2, 4);
+  global.diffArgv = process.argv.slice(2, 5);
 }
 
 let mainWindow;
@@ -23,12 +23,6 @@ function createMainWindow() {
   win.loadURL(`file://${__dirname}/index.html`);
   win.openDevTools();
   win.on('closed', onClosed);
-
-  global.diffs = {
-    base: BASE,
-    local: LOCAL,
-    remote: REMOTE
-  };
 
   return win;
 }
