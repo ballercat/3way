@@ -2,16 +2,22 @@
 'use strict';
 
 const utils = require('./utils');
+const R = require('ramda');
 const jsDiff = require('diff');
 
-const create = (raw, parts) => Object.create({
-  raw: raw,
-  lines: utils.split('\n', raw),
+const base = utils.prop('base');
+const fork = utils.prop('fork');
+
+const create = (options) => Object.create({
   isDiff: true,
-  parts: parts || null
+  base: base(options),
+  fork: fork(options),
+  lines: utils.splitLines(fork(options)),
+  diff: diff(base(options), fork(options))
 });
 
-const diff = (base, diff) => create(diff.raw, jsDiff.diffLines(base.raw, diff.raw));
+const diff = R.curry((base, fork) => utils.isString(base) && utils.isString(fork) ? jsDiff.diffLines(base, fork) : fork);
+const accept = R.curry((change, diff) => change);
 
 // Diff
 const Diff = {
@@ -21,7 +27,8 @@ const Diff = {
    * @return {Diff}
    */
   create: create,
-  diff: diff
+  diff: diff,
+  accept: accept
 };
 
 module.exports = Diff;

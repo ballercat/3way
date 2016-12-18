@@ -5,5 +5,4 @@ const patch = require('../patch_object');
 
 describe('patch', () => {
 
-
 });

@@ -10,35 +10,27 @@ describe('diff object', () => {
   describe('create', () => {
     it('is a function', () => expect(utils.isFunction(diff.create)).toBe(true));
     it('does not throw', () => expect(diff.create).not.toThrow());
-    it('returns an instance of diff', () => expect(diff.create('').isDiff).toBe(true));
-    it('splits raw input into lines', () => expect(
-      diff.create(
-        `line0
-        line1
-        line2`
-      ).lines.length
-    ).toBe(3));
+    it('returns an instance of diff', () => expect(diff.create().isDiff).toBe(true));
   });
 
   // Properties
   describe('properties', () => {
-    let obj = diff.create('');
-    it('must have isDiff defined', () => expect(obj.isDiff).toBeDefined());
-    it('must have raw defined', () => expect(obj.raw).toBeDefined());
-    it('must have lines defined', () => expect(obj.lines).toBeDefined());
-    it('must have parts defined', () => expect(obj.parts).toBeDefined());
+    let obj = diff.create();
+    it('must have isDiff', () => expect(obj.isDiff).toBeDefined());
+    it('must have base', () => expect(obj.base).toBeDefined());
+    it('must have fork', () => expect(obj.fork).toBeDefined());
+    it('must have diff', () => expect(obj.diff).toBeDefined());
   });
 
   describe('diff operation', () => {
-    let base, test;
-    beforeEach(() => {
-      base = diff.create(specUtils.loremIpsum.p[0]);
-      test = diff.create(specUtils.loremIpsum.p[1]);
-    });
+    let base = specUtils.loremIpsum.p[0];
+    let fork = specUtils.loremIpsum.p[1];
 
     it('is a function', () => expect(utils.isFunction(diff.diff)).toBe(true));
-    it('creates a new diff object', () => expect(diff.diff(base, test).isDiff).toBe(true));
-    it('creates a diff object with parts', () => expect(diff.diff(base, test).parts).toBeDefined());
-    it('creates parts with length', () => expect(diff.diff(base, test).parts.length).toBe(2));
+    it('creates an array of changes', () => expect(utils.isArray(diff.diff(base, fork))).toBe(true));
+  });
+
+  describe('accept', () => {
+    it('is a function', () => expect(utils.isFunction(diff.accept)).toBe(true));
   });
 });
