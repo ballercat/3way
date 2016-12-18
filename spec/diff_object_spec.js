@@ -33,4 +33,8 @@ describe('diff object', () => {
   describe('accept', () => {
     it('is a function', () => expect(utils.isFunction(diff.accept)).toBe(true));
   });
+
+  describe('reject', () => {
+    it('is a function', () => expect(utils.isFunction(diff.reject)).toBe(true));
+  });
 });

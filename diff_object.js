@@ -18,6 +18,7 @@ const create = (options) => Object.create({
 
 const diff = R.curry((base, fork) => utils.isString(base) && utils.isString(fork) ? jsDiff.diffLines(base, fork) : fork);
 const accept = R.curry((change, diff) => change);
+const reject = R.curry((change, diff) => change);
 
 // Diff
 const Diff = {
@@ -27,8 +28,11 @@ const Diff = {
    * @return {Diff}
    */
   create: create,
-  diff: diff,
-  accept: accept
+
+  diff:   diff,
+
+  accept: accept,
+  reject: reject
 };
 
 module.exports = Diff;
