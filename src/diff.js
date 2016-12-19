@@ -1,27 +1,36 @@
 /* eslint-env node, es6 */
 'use strict';
 
-const isString   = require('./utils').isString;
-const isNumber   = require('./utils').isNumber;
-const isArray    = require('./utils').isArray;
-const joinLines  = require('./utils').joinLines;
-const splitLines = require('./utils').splitLines;
-const base       = require('./utils').prop.get.base;
-const fork       = require('./utils').prop.get.fork;
-const diff       = require('./utils').prop.get.diff;
-const value      = require('./utils').prop.get.value;
-const index      = require('./utils').prop.get.index;
-const nthChange  = require('./utils').nthChange;
+// Utils
+const {
+  isString,
+  isNumber,
+  isArray,
+  joinLines,
+  splitLines,
+  nthChange,
+  prop: {
+    get: {
+      base,
+      fork,
+      diff,
+      value,
+      index,
+    }
+  }
+} = require('./utils');
 
-const applyPatch = require('./patch').apply;
+// Ramda
+const {
+  curry,
+  without,
+  nth,
+  reduce,
+  compose,
+} = require('ramda');
 
-const curry      = require('ramda').curry;
-const without    = require('ramda').without;
-const nth        = require('ramda').nth;
-const reduce     = require('ramda').reduce;
-const compose    = require('ramda').compose;
-
-const diffLines  = require('diff').diffLines;
+const { apply: applyPatch } = require('./patch');
+const { diffLines } = require('diff');
 
 // Factory
 const create = (options) => Object.create({

@@ -54,13 +54,6 @@ describe('diff object', () => {
         fork: fork
       }).base !== fork.base
     ).toBe(true));
-    it('injects accepted change into new base', () => expect(
-      u.getLine(
-        1,
-        diff.accept({
-          index: 1, fork: fork
-        }).base
-      )).toBe(u.getLine(1, fork.fork)));
   });
 
   describe('reject', () => {

@@ -1,9 +1,13 @@
 /* eslint-env node, es6 */
-const is = require('ramda').is;
-const _prop = require('ramda').prop;
-const _slice = require('ramda').slice;
-const curry = require('ramda').curry;
-const nth = require('ramda').nth;
+'use strict';
+
+const {
+  is,
+  prop: _prop,
+  slice: _slice,
+  curry,
+  nth
+} = require('ramda');
 
 // Checks
 const isString = is(String);
@@ -39,8 +43,8 @@ const getLine = curry((line, source) => isString(source)
 );
 
 const setLine = curry((line, value, dest) => isString(dest) && isString(value)
-      ? joinLines(R.update(line, value, splitLines(dest)))
-      : dest
+    ? joinLines(R.update(line, value, splitLines(dest)))
+    : dest
 );
 
 const slice = curry((begin, end, value) => isString(value) || isArray(value)
