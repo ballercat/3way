@@ -1,22 +1,30 @@
 /* eslint-env node, es6 */
 'use strict';
-const reduce  = require('ramda').reduce;
-const update  = require('ramda').update;
-const map     = require('ramda').map;
-const curry   = require('ramda').curry;
-const isNil   = require('ramda').isNil;
-const compose = require('ramda').compose;
-const nth     = require('ramda').nth;
 
-const splitLines = require('./utils').splitLines;
-const base       = require('./utils').prop.get.base;
-const value      = require('./utils').prop.get.value;
-const index      = require('./utils').prop.get.index;
-const removed    = require('./utils').prop.get.removed;
+const {
+  reduce,
+  update,
+  map,
+  curry,
+  isNil,
+  compose,
+  nth
+} = require('ramda');
 
-const nthChange  = require('./utils').nthChange;
+// <3 destructuring
+const {
+  splitLines,
+  nthChange,
+  prop: {
+    get: {
+      base,
+      value,
+      index,
+      removed
+    }
+  }
+} = require('./utils');
 
-// Actual constant values
 const REMOVE = 1;
 const UPDATE = 2;
 
