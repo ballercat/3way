@@ -96,6 +96,7 @@ const utils =  {
       value: safeProp('value'),
       diff : safeProp('diff'),
       index: safeProp('index'),
+      removed: safeProp('removed')
     }
   }
 };

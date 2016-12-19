@@ -1,8 +1,9 @@
 /* eslint-env node, es6, jasmine */
 'use strict';
 
-const apply    = require('../src/patch').apply;
-const generate = require('../src/patch').generate;
+const patch    = require('../src/patch');
+const apply    = patch.apply;
+const generate = patch.generate;
 
 const create = require('../src/diff').create;
 
@@ -33,23 +34,24 @@ describe('patch', () => {
   });
   // We'll bypass parsing of options and call lower level functions directly
   let patchOptions = {
-    index: 0,
+    index: 1,
     base: fork.base,
     diff: fork.diff
   };
 
-  // test sanity check... so meta
+  // meta sanity check
   it('expects correct params', () => expect(
       nth(1, splitLines(fork.fork))
     ).toBe(nth(1, splitLines(changedLines)))
   );
 
-  describe('generatate', () => {
+  describe('generate', () => {
     let result = generate(patchOptions);
     it('is a function', () => expect(isFunction(generate)).toBe(true));
     it('creates a patch array', () => expect(isArray(result)).toBe(true));
-    it('creates a correct patch array', () => {
-      expect(result[0]).toBe([1, nth(1, splitLines(p2))]);
+    it('creates delete patches', () => {
+      // Patch at position 1 is a remove
+      expect(patch.type.get(result)).toBe(patch.type.REMOVE);
     });
   });
 
