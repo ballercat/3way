@@ -1,8 +1,8 @@
 /* eslint-env node, jasmine, es6 */
 'use strict';
 
-const diff = require('../diff_object');
-const u = require('../utils');
+const diff = require('../src/diff');
+const u = require('../src/utils');
 const text = require('./spec_utils').loremIpsum;
 
 describe('diff object', () => {
