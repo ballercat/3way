@@ -3,10 +3,17 @@
 
 const {
   is,
-  prop: _prop,
-  slice: _slice,
+  map,
+  nth,
   curry,
-  nth
+  concat,
+  filter,
+  update,
+  isEmpty,
+  replace,
+  complement,
+  prop: _prop,
+  slice: _slice
 } = require('ramda');
 
 // Checks
@@ -43,8 +50,8 @@ const getLine = curry((line, source) => isString(source)
 );
 
 const setLine = curry((line, value, dest) => isString(dest) && isString(value)
-    ? joinLines(R.update(line, value, splitLines(dest)))
-    : dest
+      ? joinLines(update(line, value, splitLines(dest)))
+      : dest
 );
 
 const slice = curry((begin, end, value) => isString(value) || isArray(value)
@@ -63,6 +70,11 @@ const nthChange  = options => nth(
     safeProp('index', options),
     safeProp('diff', options)
 );
+
+const withToken = curry((token, value) => concat(value, token));
+const removeEmpty = filter(complement(isEmpty));
+
+const noEOL = replace('\n', '');
 
 // Utility Object
 const utils =  {
@@ -89,6 +101,8 @@ const utils =  {
 
   nthChange:  nthChange,
 
+  noEOL: noEOL,
+
   // Object
   prop: {
     safe: safeProp,
@@ -100,7 +114,8 @@ const utils =  {
       value: safeProp('value'),
       diff : safeProp('diff'),
       index: safeProp('index'),
-      removed: safeProp('removed')
+      removed: safeProp('removed'),
+      added: safeProp('added')
     }
   }
 };

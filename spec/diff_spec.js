@@ -34,7 +34,6 @@ describe('diff object', () => {
     ).toBe(true));
   });
 
-
   describe('accept', () => {
     let fork = diff.create({
       base: text.p[0],
