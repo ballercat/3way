@@ -41,12 +41,14 @@ describe('diff object', () => {
     });
 
     it('is a function', () => expect(u.isFunction(diff.accept)).toBe(true));
+
     it('accepts a change, returns a new diff', () => expect(
       diff.accept({
         index: 0,
         fork: fork
       }).isDiff
     ).toBe(true));
+
     it('forms a new base within created fork', () => expect(
       diff.accept({
         index: 1,

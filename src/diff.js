@@ -51,9 +51,9 @@ const makeDiff = curry((base, fork) => isString(base) && isString(fork)
 // High level diff actions
 const accept = options => canAccept(options)
   ? create({
-    base: joinLines(applyPatch(options)),
-    fork: joinLines(without(nthChange(options), diff(options)))
-  })
+      base: joinLines(applyPatch(options)),
+      fork: joinLines(without(nthChange(options), diff(options)))
+    })
   : options;
 
 const canAccept = options =>
@@ -69,12 +69,6 @@ const parseAccept = options => Object.create({
 
 const reject = options => options;
 
-const lineChanged = options => reduce(
-    (a, b) => a + count(b),
-    0,
-    sliceTo(index(options), diff(options))
-);
-
 // Diff
 const Diff = {
   /**
@@ -88,9 +82,7 @@ const Diff = {
   accept: compose(accept, parseAccept),
   parseAccept: parseAccept,
 
-  reject: reject,
-
-  lineChanged: lineChanged
+  reject: reject
 };
 
 module.exports = Diff;
