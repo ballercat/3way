@@ -5,7 +5,7 @@
   "description": "3-way merge",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node jasmine.js",
     "sass": "node-sass --include-path scss scss/main.scss main.css",
     "watch-sass": "nodemon -e scss -x \"npm run sass\"",
     "watch-jasmine": "nodemon -e spec -x \"jasmine\""
@@ -15,6 +15,9 @@
   ],
   "author": "Arthur Buldauskas",
   "license": "MIT",
+  "dependencies": {
+    "ramda": "latest"
+  },
   "devDependencies": {
     "electron": "^1.4.12",
     "jasmine": "^2.5.2",
