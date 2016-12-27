@@ -9,6 +9,7 @@ const {
   concat,
   filter,
   update,
+  length,
   isEmpty,
   replace,
   complement,
@@ -79,6 +80,8 @@ const noEOL = replace('\n', '');
 const removeLine = (line, count, source) =>
     joinLines(remove(line, count, splitLines(source)));
 
+const countLines = source => length(splitLines);
+
 // Utility Object
 const utils =  {
   // Checks
@@ -94,6 +97,7 @@ const utils =  {
   getLine:    getLine,
   setLine:    setLine,
   removeLine: removeLine,
+  countLines: countLines,
 
   slice: slice,
   sliceTo: sliceTo,

@@ -57,6 +57,7 @@ function parseDiffs(diffs) {
     return seed;
   }
 
+  debugger;
   diffs.base.diff = diffs.base.value.split('\n');
   diffs.local.diff = R.reduce(addLineNumber, [], jsdiff.diffLines(diffs.base.value, diffs.local.value));
   diffs.remote.diff = R.reduce(addLineNumber, [], jsdiff.diffLines(diffs.base.value, diffs.remote.value));
@@ -68,7 +69,7 @@ function App(options) {
   let diffsObj = parseDiffs(R.zipObj(diffsMap, diffs));
 
   console.log(diffsObj);
-  render(diffsObj);
+  // render(diffsObj);
 }
 
 var app = new App({
