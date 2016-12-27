@@ -23,11 +23,11 @@ const {
 // Ramda
 const {
   curry,
-  without,
   nth,
   reduce,
   compose,
-	identity
+	identity,
+  remove
 } = require('ramda');
 
 const { apply: applyPatch } = require('./patch');
@@ -39,7 +39,7 @@ const create = (options) => identity({
   base: base(options),
   fork: fork(options),
   lines: splitLines(fork(options)),
-  diff: makeDiff(base(options), fork(options))
+  diff: diff(options) || makeDiff(base(options), fork(options))
 });
 
 
@@ -71,6 +71,12 @@ const parseAccept = options => identity({
 });
 
 const reject = options => canAccept(options)
+    ? create({
+        base: base(options),
+        fork: fork(options),
+        diff: remove(index(options), diff(options))
+      })
+    : options;
 
 // Diff
 const Diff = {

@@ -4,7 +4,9 @@
 const {
 	nth,
 	merge,
-  compose
+  length,
+  compose,
+  indexOf
 } = require('ramda');
 
 const {
@@ -16,7 +18,8 @@ const {
 		}
 	},
   isFunction,
-  isArray
+  isArray,
+  splitLines
 } = require('../src/utils');
 
 const {
@@ -55,7 +58,7 @@ describe('diff object', () => {
   describe('diff operation', () => {
     it('is a function', () => expect(isFunction(diff.diff)).toBe(true));
     it('creates an array of changes', () => expect(
-      u.isArray(
+      isArray(
         diff.diff(
           text.p[0],
           text.p[1]
@@ -91,18 +94,38 @@ describe('diff object', () => {
 			expect(diff.accept(options).fork == fork.fork).toBe(true);
 		});
 
-		it('applies correct changes to new base', () => {
+		it('applies addition changes to new base', () => {
 			let options = merge({index: 2}, fork);
 			let resultLine = getLine(1, diff.accept(options).base);
       let noEOLValue = compose(noEOL, value, nth(2))
 			expect(resultLine).toBe(noEOLValue(fork.diff));
 		});
+
+    it('applies removal changes to new base', () => {
+      let options = merge({index: 1}, fork);
+      let removedLine = getLine(1, fork.base);
+      let line0 = getLine(0, fork.base);
+      let line2 = getLine(2, fork.base);
+      let result = diff.accept(options);
+      let splitResult = splitLines(result.base);
+      let oldLength = length(splitLines(fork.base));
+      expect(indexOf(removedLine, result)).toBe(-1);
+      expect(indexOf(line0, splitResult)).toBe(0);
+      expect(indexOf(line2, splitResult)).toBe(1);
+      expect(length(splitResult)).toBe(oldLength - 1);
+    });
   });
 
   describe('reject', () => {
+    let options = merge({index: 1}, fork);
+    let rejected = nth(1, fork.diff);
+    let result = diff.reject(options);
     it('is a function', () => expect(isFunction(diff.reject)).toBe(true));
     it('returns a new diff', () => {
-      diff.reject();
+      expect(diff.reject(options).isDiff).toBe(true);
+    });
+    it('removes pending change from diff', () => {
+      expect(indexOf(rejected, result.diff)).toBe(-1);
     });
   });
 });
