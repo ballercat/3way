@@ -16,7 +16,8 @@
   "author": "Arthur Buldauskas",
   "license": "MIT",
   "dependencies": {
-    "ramda": "latest"
+    "ramda": "latest",
+    "diff": "latest"
   },
   "devDependencies": {
     "electron": "^1.4.12",
