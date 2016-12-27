@@ -32,3 +32,11 @@ describe('nthChange', () => {
     )).toBe(getLine(1, text.p[1]));
   });
 });
+
+describe('getLine', () => {
+
+  it('returns correct line', () => {
+    let split = text.p[0].split('\n');
+    expect(getLine(1, text.p[0])).toBe(split[1]);
+  });
+});

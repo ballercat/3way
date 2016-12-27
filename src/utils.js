@@ -76,6 +76,9 @@ const removeEmpty = filter(complement(isEmpty));
 
 const noEOL = replace('\n', '');
 
+const removeLine = (line, count, source) =>
+    joinLines(remove(line, count, splitLines(source)));
+
 // Utility Object
 const utils =  {
   // Checks
@@ -85,11 +88,12 @@ const utils =  {
   isNumber:   isNumber,
   isFunction: isFunction,
 
-  // String
+  // String, Lines
   split:      split,
   splitLines: splitLines,
   getLine:    getLine,
   setLine:    setLine,
+  removeLine: removeLine,
 
   slice: slice,
   sliceTo: sliceTo,

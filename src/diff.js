@@ -23,22 +23,23 @@ const {
 // Ramda
 const {
   curry,
-  without,
   nth,
   reduce,
   compose,
+	identity,
+  remove
 } = require('ramda');
 
 const { apply: applyPatch } = require('./patch');
 const { diffLines } = require('diff');
 
 // Factory
-const create = (options) => Object.create({
+const create = (options) => identity({
   isDiff: true,
   base: base(options),
   fork: fork(options),
   lines: splitLines(fork(options)),
-  diff: makeDiff(base(options), fork(options))
+  diff: diff(options) || makeDiff(base(options), fork(options))
 });
 
 
@@ -50,24 +51,32 @@ const makeDiff = curry((base, fork) => isString(base) && isString(fork)
 
 // High level diff actions
 const accept = options => canAccept(options)
-  ? create({
-      base: joinLines(applyPatch(options)),
-      fork: joinLines(without(nthChange(options), diff(options)))
-    })
-  : options;
+		? create({
+				base: joinLines(applyPatch(options)),
+				fork: fork(options)
+			})
+		: options;
 
 const canAccept = options =>
     isString(base(options))  &&
+		isString(fork(options)) &&
     isNumber(index(options)) &&
     isArray(diff(options));
 
-const parseAccept = options => Object.create({
+const parseAccept = options => identity({
   index: index(options) | 0,
-  base: base(fork(options)),
-  diff: diff(fork(options))
+  base: base(options),
+  diff: diff(options),
+	fork: fork(options)
 });
 
-const reject = options => options;
+const reject = options => canAccept(options)
+    ? create({
+        base: base(options),
+        fork: fork(options),
+        diff: remove(index(options), diff(options))
+      })
+    : options;
 
 // Diff
 const Diff = {
@@ -81,6 +90,8 @@ const Diff = {
 
   accept: compose(accept, parseAccept),
   parseAccept: parseAccept,
+
+	canAccept: canAccept,
 
   reject: reject
 };

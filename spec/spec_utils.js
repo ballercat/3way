@@ -42,8 +42,16 @@ const loremIpsum = {
   ]
 };
 
+const changeLine = (line, dest, source) => {
+  dest = dest.split('\n');
+  source = source.split('\n');
+  dest[line] = source[line];
+  return dest.join('\n');
+};
+
 const config = {
-  loremIpsum: loremIpsum
+  loremIpsum: loremIpsum,
+  changeLine: changeLine
 };
 
 module.exports = config;
