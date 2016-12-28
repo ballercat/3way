@@ -49,3 +49,4 @@ const component = {
 };
 
 module.exports = component;
+
