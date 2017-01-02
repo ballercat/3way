@@ -5,62 +5,87 @@ const {
   zip,
   map,
   prop,
-  reduce
+  merge,
+  curry,
+  reduce,
+  compose,
+  identity
 } = require('ramda');
 
 const {
   exists,
   prop: {
     get: {
+      data,
       diffs
     }
   }
 } = require('./utils');
 
 const {
-  parse
+  parse,
+  diff
 } = require('./parser');
 
 const {
   render: appComponent
 } = require('./app_component');
 
-const diffsMap = ['base', 'local', 'remote'];
 
 /**
  * @return Object Remote passed in or a dummy object
  */
-const remote = options => remoteExists(options)
-      ? _remote(options)
-      : identity({
-          getArgv: function() {}
-      });
-const remoteExists = compose(exists, _remote);
 const _remote = prop('remote');
+const remoteExists = compose(exists, _remote);
+const remote = options => remoteExists(options)
+    ? _remote(options)
+    : identity({
+      getArgv: () => []
+    });
 
-const fileSystem = options fileSystemExists(options)
-      ? _fs(options)
-      : identity({
-        readFileSync: function() {}
-      });
-const fileSystemExists = compose(exists, _fs);
+/**
+ * @return Object Filesystem passed in or dummy object
+ */
 const _fs = prop('fs');
-
+const fileSystemExists = compose(exists, _fs);
+const fileSystem = options => fileSystemExists(options)
+    ? _fs(options)
+    : identity({
+      readFileSync: () => ''
+    });
+/**
+ * @return {String} Rendered HTML
+ */
 const render = app => `${appComponent(diffs(app))}`;
 
-const pathToData = (fs, path) => fs.readFileSync(path, 'utf-8');
+const setup = options =>
+    identity(
+        {
+          remote: remote(options),
+          fs:     fileSystem(options),
+          argv:   remote(options).getArgv()
+        }
+    );
 
-// Create/ctor
-const create = options => {
-  this.remote = remote(options);
-  this.fs = fileSystem(options);
-  this.diffArgv = isArray(options.diffArgs) ? options.diffArgv : [];
+const parseData = options =>
+    merge(
+        options,
+        {
+          data: parse(
+              options.fs,
+              ['base', 'local', 'remote'],
+              options.argv
+          )
+        }
+    );
 
-  const data = map(pathToData, this.diffArgv);
-}
+const parseDiffs = options => merge(options, {diffs: diff(data(options))});
 
 const app = {
-  create: create,
+  create: compose(parseDiffs, parseData, setup),
+  setup: setup,
+  parseData: parseData,
+  parseDiffs: parseDiffs,
   render: render
 };
 

@@ -8,6 +8,7 @@ const {
   nth,
   isNil,
   curry,
+  propEq,
   concat,
   filter,
   update,
@@ -97,6 +98,7 @@ const utils =  {
   isObject:   isObject,
   isNumber:   isNumber,
   isFunction: isFunction,
+  isDiff:     propEq('isDiff', true),
 
   // String, Lines
   split:      split,
@@ -127,6 +129,7 @@ const utils =  {
       // Popular safe Properties
       base : safeProp('base'),
       fork : safeProp('fork'),
+      data:  safeProp('data'),
       count: safeProp('count'),
       value: safeProp('value'),
       diff : safeProp('diff'),

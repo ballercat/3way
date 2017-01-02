@@ -1,41 +1,77 @@
 /* eslint-env node, es6 */
 'use strict';
 
-function dataToDiff(data) {
-  return {
-    el: document.getElementById(`${data[0]}-diff`),
-    value: readFile(data[1]),
-    name: data[0]
-  };
-}
+const {
+  nth,
+  map,
+  find,
+  curry,
+  clone,
+  propEq,
+  reduce,
+  append,
+  length,
+  identity
+} = require('ramda');
 
-const parse = diffs => {
-  function addLineNumber(seed, part) {
-    let lineNumber = R.last(seed)
-        ? R.last(seed).lineNumber + R.last(seed).count
-         : 0;
-    part.lineNumber = lineNumber;
-    seed.push(part);
-    return seed;
+const {
+  diffLines
+} = require('diff');
+
+const {
+  prop: {
+    get: {
+      data
+    }
   }
+} = require('../src/utils');
 
-  diffs.base.diff = diffs.base.value.split('\n');
-  diffs.local.diff = R.reduce(
-      addLineNumber,
-      [],
-      jsdiff.diffLines(diffs.base.value, diffs.local.value)
-  );
-  diffs.remote.diff = R.reduce(
-      addLineNumber,
-      [],
-      jsdiff.diffLines(diffs.base.value, diffs.remote.value)
-  );
+const {
+  create: createDiff
+} = require('../src/diff');
 
-  return diffs;
-};
+/**
+ * Parses arguments into diffs with data
+ *
+ * @param {Object} fs   API for filesystem
+ * @param {Array}  args Diff arguments
+ */
+const parse = (fs, names, args) =>
+    reduce(
+        name(names),
+        [],
+        map(_data(fs), args)
+    );
+
+// @todo: Convert to Promises to support any source of data
+const _data = curry((fs, path) => fs.readFileSync(path, 'utf-8'));
+
+// Maps names to data
+const name = curry(
+    (names, acc, rawData) =>
+        append(
+            identity({
+              name: nth(length(acc), names),
+              data: rawData
+            }),
+            acc
+        )
+);
+
+const diff = rawData  => map(parseDiff(whereBase(rawData)), rawData);
+const whereBase = rawData => find(propEq('name', 'base'), rawData);
+const parseDiff = curry((base, fork) =>
+    createDiff(
+        {
+          base: data(base),
+          fork: data(fork)
+        }
+    )
+);
 
 const parser = {
-  parse: parse
+  parse: curry(parse),
+  diff: diff
 }
 
 return module.exports = parser;
