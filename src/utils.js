@@ -14,6 +14,7 @@ const {
   length,
   isEmpty,
   replace,
+  compose,
   complement,
   prop: _prop,
   slice: _slice

@@ -38,8 +38,6 @@ describe('Component: diff', () => {
   ];
 
   it('renders a collection of changes', () => {
-    let result = render(changes);
-    console.log(result);
-    expect(isString(result)).toBe(true);
+    expect(isString(render(changes))).toBe(true);
   });
 });
