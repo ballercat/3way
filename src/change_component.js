@@ -1,6 +1,7 @@
 /* eslint-env node, es6 */
 
 const {
+  flip,
   reduce,
   compose
 } = require('ramda');
@@ -30,17 +31,13 @@ const renderType = state => removed(state)
         : '';
 
 // @todo Render tokens: keywords, numbers, literals etc.,
-const renderLine = (acc, line) => `
-  ${acc}
-  <span class="${css.text}">${line}</span>
-`;
+const renderLine = (acc, line) => `${acc}
+<span class="${css.text}">${line}</span>`;
 
 const renderLines = compose(reduce(renderLine, ''), splitLines, value);
-
-const render = state => `
-  <span class="${css.inner}${renderType(state)}">
-    ${renderLines(state)}
-  </span>
+const render = state => `<span class="${css.inner}${renderType(state)}">
+	${renderLines(state)}
+</span>
 `;
 
 const component = {

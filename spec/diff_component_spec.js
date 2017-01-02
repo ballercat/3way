@@ -9,23 +9,28 @@ const {
 } = require('./spec_utils');
 
 const {
-  splitLines
+  splitLines,
+  isString
 } = require('../src/utils');
 
 const {
-  nth
+  nth,
+  prop,
+  compose
 } = require('ramda');
 
 describe('Component: diff', () => {
+  const removedValue = compose(nth(0), splitLines, nth(0), prop('p'));
+  const addedValue = compose(nth(1), splitLines, nth(1), prop('p'));
   let changes = [
     {
-      value: nth(0, splitLines(text.p[0])),
+      value: removedValue(text),
       removed: true,
       added: undefined,
       count: 1
     },
     {
-      value: nth(0, splitLines(text.p[1])),
+      value: addedValue(text),
       removed: undefined,
       added: true,
       count: 1
@@ -34,7 +39,7 @@ describe('Component: diff', () => {
 
   it('renders a collection of changes', () => {
     let result = render(changes);
-
-    expect(!!result).toBe(true);
+    console.log(result);
+    expect(isString(result)).toBe(true);
   });
 });

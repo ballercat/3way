@@ -51,7 +51,9 @@ function dataToDiff(data) {
 
 function parseDiffs(diffs) {
   function addLineNumber(seed, part) {
-    let lineNumber = R.last(seed) ? R.last(seed).lineNumber + R.last(seed).count : 0;
+    let lineNumber = R.last(seed)
+        ? R.last(seed).lineNumber + R.last(seed).count
+         : 0;
     part.lineNumber = lineNumber;
     seed.push(part);
     return seed;
@@ -59,12 +61,21 @@ function parseDiffs(diffs) {
 
   debugger;
   diffs.base.diff = diffs.base.value.split('\n');
-  diffs.local.diff = R.reduce(addLineNumber, [], jsdiff.diffLines(diffs.base.value, diffs.local.value));
-  diffs.remote.diff = R.reduce(addLineNumber, [], jsdiff.diffLines(diffs.base.value, diffs.remote.value));
+  diffs.local.diff = R.reduce(
+      addLineNumber,
+      [],
+      jsdiff.diffLines(diffs.base.value, diffs.local.value)
+  );
+  diffs.remote.diff = R.reduce(
+      addLineNumber,
+      [],
+      jsdiff.diffLines(diffs.base.value, diffs.remote.value)
+  );
   return diffs;
 }
 
 function App(options) {
+  debugger;
   let diffs = R.map(dataToDiff, R.zip(diffsMap, options.diffArgv || []));
   let diffsObj = parseDiffs(R.zipObj(diffsMap, diffs));
 

@@ -4,7 +4,9 @@
 const {
   is,
   map,
+  not,
   nth,
+  isNil,
   curry,
   concat,
   filter,
@@ -82,6 +84,8 @@ const removeLine = (line, count, source) =>
 
 const countLines = source => length(splitLines);
 
+const exists = compose(not, isNil);
+
 // Utility Object
 const utils =  {
   // Checks
@@ -110,6 +114,7 @@ const utils =  {
   nthChange:  nthChange,
 
   noEOL: noEOL,
+  exists: exists,
 
   // Object
   prop: {
