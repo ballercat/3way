@@ -27,11 +27,6 @@ const {
   diff
 } = require('./parser');
 
-const {
-  render: appComponent
-} = require('./app_component');
-
-
 /**
  * @return Object Remote passed in or a dummy object
  */
@@ -53,11 +48,6 @@ const fileSystem = options => fileSystemExists(options)
     : identity({
       readFileSync: () => ''
     });
-/**
- * @return {String} Rendered HTML
- */
-const render = app => `${appComponent(diffs(app))}`;
-
 const setup = options =>
     identity(
         {
@@ -85,8 +75,7 @@ const app = {
   create: compose(parseDiffs, parseData, setup),
   setup: setup,
   parseData: parseData,
-  parseDiffs: parseDiffs,
-  render: render
+  parseDiffs: parseDiffs
 };
 
 module.exports = app;

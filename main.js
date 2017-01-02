@@ -7,6 +7,19 @@ const {
   create: createApp
 } = require('./src/app');
 
+const {
+  render: appComponent
+} = require('./src/app_component');
+
+const {
+  prop: {
+    get: {
+      diff,
+      diffs
+    }
+  }
+} = require('./src/utils');
+
 const _remote = {
   getArgv: () => remote.getGlobal('diffArgv') || []
 }
@@ -16,4 +29,8 @@ let app = createApp({
   remote: _remote
 });
 
-console.log(app);
+let html = appComponent(app);
+
+let mainEl = document.getElementById('main');
+mainEl.innerHTML = html;
+

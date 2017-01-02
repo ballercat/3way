@@ -8,7 +8,8 @@
     "test": "node jasmine.js",
     "sass": "node-sass --include-path scss scss/main.scss main.css",
     "watch-sass": "nodemon -e scss -x \"npm run sass\"",
-    "watch-jasmine": "nodemon -e spec -x \"jasmine\""
+    "watch-jasmine": "nodemon -e spec -x \"jasmine\"",
+    "render-test": "node render-test.js"
   },
   "keywords": [
     "diff"

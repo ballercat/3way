@@ -10,20 +10,28 @@ const {
 } = require('./diff_component');
 
 const {
-  pop
+  pop,
+  prop: {
+    get: {
+      diff,
+      diffs
+    }
+  }
 } = require('./utils');
 
 const css = {};
 
-const render = sate => `
-  <div class="App">${renderDiffs(state)}</div>
+const render = app => `
+  <div class="App">${renderDiffs(diffs(app))}</div>
 `;
 
 const renderDiffs = state => reduce(toDiff, '', state);
 const toDiff = (acc, state) => `${acc} ${container(pop(state))}`;
 
 // Diff container
-const container = state => `<div class="Diff">${diffComponent(state)}</div>`;
+const container = state => `<div class="Diff">
+  ${diffComponent(diff(state))}
+</div>`;
 
 const component = {
   render: render,
