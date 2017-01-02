@@ -9,12 +9,21 @@ const {
 } = require('ramda');
 
 const {
-  exists
+  exists,
+  prop: {
+    get: {
+      diffs
+    }
+  }
 } = require('./utils');
 
 const {
   parse
 } = require('./parser');
+
+const {
+  render: appComponent
+} = require('./app_component');
 
 const diffsMap = ['base', 'local', 'remote'];
 
@@ -37,15 +46,22 @@ const fileSystem = options fileSystemExists(options)
 const fileSystemExists = compose(exists, _fs);
 const _fs = prop('fs');
 
+const render = app => `${appComponent(diffs(app))}`;
+
+const pathToData = (fs, path) => fs.readFileSync(path, 'utf-8');
+
+// Create/ctor
 const create = options => {
   this.remote = remote(options);
   this.fs = fileSystem(options);
-  let diffs = map(dataToDiff, zip(diffsMap, options.diffArgv || []));
-  let diffsObj = parseDiffs(R.zipObj(diffsMap, diffs));
+  this.diffArgv = isArray(options.diffArgs) ? options.diffArgv : [];
+
+  const data = map(pathToData, this.diffArgv);
 }
 
 const app = {
-  create: create
+  create: create,
+  render: render
 };
 
 module.exports = app;

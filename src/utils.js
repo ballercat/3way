@@ -63,6 +63,8 @@ const slice = curry((begin, end, value) => isString(value) || isArray(value)
     : value
 );
 
+const pop = a => isArray(a) ? a.pop() : a;
+
 // Specials
 const splitLines = split('\n');
 
@@ -111,6 +113,7 @@ const utils =  {
   join:       join,
   joinLines:  joinLines,
   forEach:    forEach,
+  pop:        pop,
 
   nthChange:  nthChange,
 
@@ -127,6 +130,7 @@ const utils =  {
       count: safeProp('count'),
       value: safeProp('value'),
       diff : safeProp('diff'),
+      diffs: safeProp('diffs'),
       index: safeProp('index'),
       removed: safeProp('removed'),
       added: safeProp('added')
