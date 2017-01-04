@@ -90,6 +90,14 @@ const countLines = source => length(splitLines);
 
 const exists = compose(not, isNil);
 
+const args = () => arguments.length
+    ? Array.prototype.reduce.call(
+          arguments,
+          (acc, val) => append(val, acc),
+          []
+      )
+    : [];
+
 // Utility Object
 const utils =  {
   // Checks
@@ -121,6 +129,8 @@ const utils =  {
 
   noEOL: noEOL,
   exists: exists,
+
+  args: args,
 
   // Object
   prop: {
