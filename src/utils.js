@@ -12,6 +12,7 @@ const {
   concat,
   filter,
   update,
+  append,
   length,
   isEmpty,
   replace,
@@ -90,14 +91,21 @@ const countLines = source => length(splitLines);
 
 const exists = compose(not, isNil);
 
-const args = () => arguments.length
-    ? Array.prototype.reduce.call(
+const args = function() {
+  let result = [];
+  if (!!arguments.length) {
+    result = Array.prototype.reduce.call(
           arguments,
-          (acc, val) => append(val, acc),
+          (acc, val) => {
+            debugger;
+            return append(val, acc);
+          },
           []
-      )
-    : [];
-
+      );
+  }
+  debugger;
+  return result;
+};
 // Utility Object
 const utils =  {
   // Checks
