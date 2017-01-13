@@ -3,13 +3,15 @@ var path = require('path');
 var config = {
   context: path.join(__dirname, 'src'),
   entry: [
-    './main.js'
+    '../main.js'
   ],
   output: {
     path: path.join(__dirname, 'app'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    libraryTarget: 'commonjs2'
   },
-  moduel: {
+  target: 'electron',
+  module: {
     loaders: [
       {
         test: /\.js$/,

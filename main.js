@@ -65,7 +65,7 @@ function parseDiffs(diffs) {
 
 function App(options) {
   let diffs = R.map(dataToDiff, R.zip(diffsMap, options.diffArgv || []));
-  let diffsObj = parseDiffs(R.zipObj(diffsMap, diffs));
+  let diffsObj = {};// parseDiffs(R.zipObj(diffsMap, diffs));
 
   console.log(diffsObj);
   render(diffsObj);
