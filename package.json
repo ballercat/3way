@@ -23,6 +23,8 @@
     "babel-preset-react": "^6.16.0",
     "diff": "latest",
     "ramda": "latest",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
     "webpack": "^1.14.0"
   },
   "devDependencies": {
