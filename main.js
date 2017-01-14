@@ -3,6 +3,15 @@
 
 const remote = require('electron').remote;
 const fs = require('fs');
+const R = require('ramda');
+const jsdiff = require('diff');
+const indexedMap = R.addIndex(R.map);
+
+const React    = require('react');
+const ReactDOM = require('react-dom')
+
+const Counter  = require('./src/Counter');
+
 const {
   create: createApp
 } = require('./src/app');
@@ -11,6 +20,7 @@ const {
   render: appComponent
 } = require('./src/app_component');
 
+const diffsMap = ['base', 'local', 'remote'];
 const {
   prop: {
     get: {
