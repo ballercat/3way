@@ -8,6 +8,11 @@ const jsdiff = require('diff');
 const indexedMap = R.addIndex(R.map);
 const diffsMap = ['base', 'local', 'remote'];
 
+const React    = require('react');
+const ReactDOM = require('react-dom')
+
+const Counter  = require('./src/Counter');
+
 function renderDiffPart(part) {
   let value = (part.value || part);
 
@@ -68,7 +73,11 @@ function App(options) {
   let diffsObj = {};// parseDiffs(R.zipObj(diffsMap, diffs));
 
   console.log(diffsObj);
-  render(diffsObj);
+  debugger;
+  ReactDOM.render(
+    React.createElement(Counter),
+    document.getElementById('local-diff')
+  );
 }
 
 var app = new App({
