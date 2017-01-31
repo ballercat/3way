@@ -3,32 +3,15 @@
 
 const remote = require('electron').remote;
 const fs = require('fs');
-const R = require('ramda');
-const jsdiff = require('diff');
-const indexedMap = R.addIndex(R.map);
 
-const React    = require('react');
-const ReactDOM = require('react-dom')
+import ReactDOM from 'react-dom';
+import React from 'react';
 
-const Counter  = require('./src/Counter');
+import App from './src/component/App';
 
 const {
   create: createApp
 } = require('./src/app');
-
-const {
-  render: appComponent
-} = require('./src/app_component');
-
-const diffsMap = ['base', 'local', 'remote'];
-const {
-  prop: {
-    get: {
-      diff,
-      diffs
-    }
-  }
-} = require('./src/utils');
 
 const _remote = {
   getArgv: () => remote.getGlobal('diffArgv') || []
@@ -38,9 +21,10 @@ let app = createApp({
   fs: fs,
   remote: _remote
 });
+console.log(app);
 
-let html = appComponent(app);
-
-let mainEl = document.getElementById('main');
-mainEl.innerHTML = html;
+ReactDOM.render(
+  <App initialRows={app.diffs} />,
+  document.getElementById("main")
+);
 

@@ -10,6 +10,13 @@ var config = {
     filename: 'bundle.js',
     libraryTarget: 'commonjs2'
   },
+  resolve: {
+    root: [
+      path.resolve('src'),
+      path.resolve('node_modules')
+    ]
+  },
+  devtool: 'source-map',
   target: 'electron',
   module: {
     loaders: [
@@ -18,7 +25,7 @@ var config = {
         exclude: /node_modules/,
         loaders: ['babel'],
       },
-    ],
+    ]
   },
   resolveLoader: {
     root: [
@@ -28,7 +35,7 @@ var config = {
   resolve: {
     root: [
       path.join(__dirname, 'node_modules'),
-    ],
+    ]
   }
 };
 module.exports = config;

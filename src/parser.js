@@ -74,4 +74,4 @@ const parser = {
   diff: diff
 }
 
-return module.exports = parser;
+export default parser;

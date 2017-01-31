@@ -10,13 +10,10 @@ const {
   render: changeComponent
 } = require('./change_component');
 
-const css = {
-
-};
-
 const render = state => `<table>${body(state)}</table>`;
 const body = state => `<tbody>${rows(state)}</tbody>`
 const rows = state => reduce(renderRow, '', state);
+
 const renderRow = (acc, row) =>  `
 ${acc}
   <tr>

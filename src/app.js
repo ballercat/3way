@@ -22,10 +22,11 @@ const {
   }
 } = require('./utils');
 
+import parser from './parser';
 const {
   parse,
   diff
-} = require('./parser');
+} = parser;
 
 /**
  * @return Object Remote passed in or a dummy object
@@ -57,8 +58,8 @@ const setup = options =>
         }
     );
 
-const parseData = options =>
-    merge(
+const parseData = options => {
+    return merge(
         options,
         {
           data: parse(
@@ -68,6 +69,7 @@ const parseData = options =>
           )
         }
     );
+}
 
 const parseDiffs = options => merge(options, {diffs: diff(data(options))});
 

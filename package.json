@@ -10,7 +10,8 @@
     "watch-sass": "nodemon -e scss -x \"npm run sass\"",
     "watch-jasmine": "nodemon -e spec -x \"jasmine\"",
     "render-test": "node render-test.js",
-    "compile": "webpack"
+    "compile": "webpack",
+    "watch-compile": "webpack --watch"
   },
   "keywords": [
     "diff"

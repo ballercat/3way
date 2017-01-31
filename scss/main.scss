@@ -5,6 +5,32 @@
 $diff-red: #f9c1c1;
 $diff-green: #b5f1b5;
 
+.App {
+  display: flex;
+
+  .Diff {
+    width: 30%;
+
+    .code {
+      width: 100;
+
+      &-Inner {
+        &-text {
+          width: 100%;
+          display: inline-block;
+        }
+
+        &-removed {
+          background-color: $diff-red;
+        }
+        &-added {
+          background-color: $diff-green;
+        }
+      }
+    }
+  }
+}
+
 .main {
   display: flex;
 
